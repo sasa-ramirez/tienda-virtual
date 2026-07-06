@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (contienen contraseñas y claves secretas)
+.env
+.env.local
+.env.production
+
+# Archivos de build / producción
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos del editor
+.vscode/
+.idea/
+
+# Uploads locales (imágenes subidas antes de ir a Cloudinary)
+backend/uploads/*
+!backend/uploads/.gitkeep
