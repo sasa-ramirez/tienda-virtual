@@ -67,7 +67,22 @@ async function login({ correo, password }) {
   return { usuario: usuarioSinPassword, token };
 }
 
+async function obtenerPerfil(id) {
+  const usuario = await usuarioRepository.buscarPorId(id);
+
+  if (!usuario) {
+    const error = new Error('Usuario no encontrado');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const { password: _, ...usuarioSinPassword } = usuario;
+
+  return usuarioSinPassword;
+}
+
 export default {
   registrar,
   login,
+  obtenerPerfil,
 };

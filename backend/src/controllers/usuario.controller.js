@@ -36,7 +36,28 @@ async function login(req, res) {
   }
 }
 
+
+async function perfil(req, res) {
+  try {
+    const usuario = await usuarioService.obtenerPerfil(req.usuario.id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Perfil obtenido exitosamente',
+      data: usuario,
+    });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || 'Error interno del servidor',
+      data: null,
+    });
+  }
+}
+
+
 export default {
   registrar,
   login,
+  perfil
 };

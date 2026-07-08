@@ -2,6 +2,7 @@ import { Router } from 'express';
 import usuarioController from '../controllers/usuario.controller.js';
 import usuarioValidator from '../validators/usuario.validator.js';
 import manejarErroresValidacion from '../middlewares/validacion.middleware.js';
+import authMiddleware from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
@@ -20,5 +21,8 @@ router.post(
   manejarErroresValidacion,
   usuarioController.login
 );
+
+// Ruta protegida para obtener el perfil del usuario autenticado
+router.get('/perfil', authMiddleware.verificarToken, usuarioController.perfil);
 
 export default router;
