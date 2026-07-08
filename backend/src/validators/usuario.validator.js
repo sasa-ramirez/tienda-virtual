@@ -27,6 +27,17 @@ const registrarValidator = [
     .isLength({ min: 7 }).withMessage('El teléfono debe tener al menos 7 dígitos'),
 ];
 
+const loginValidator = [
+  body('correo')
+    .trim()
+    .notEmpty().withMessage('El correo es obligatorio')
+    .isEmail().withMessage('El correo no tiene un formato válido'),
+
+  body('password')
+    .notEmpty().withMessage('La contraseña es obligatoria'),
+];
+
 export default {
   registrarValidator,
+  loginValidator,
 };
