@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import productoService from '../services/producto.service';
 import categoriaService from '../services/categoria.service';
+import { Link } from 'react-router-dom';
 
 function Catalogo() {
   const [searchParams] = useSearchParams();
@@ -66,10 +67,11 @@ function Catalogo() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {productos.map((producto) => (
-            <div
-              key={producto.id}
-              className="group bg-white border border-borde rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-            >
+            <Link
+  key={producto.id}
+  to={`/productos/${producto.id}`}
+  className="group bg-white border border-borde rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer block"
+>
               <div className="h-52 bg-acento-claro flex items-center justify-center text-texto-secundario text-sm relative overflow-hidden">
                 Sin imagen
                 <button
@@ -89,7 +91,7 @@ function Catalogo() {
                   ${Number(producto.precio).toLocaleString('es-CO')}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
