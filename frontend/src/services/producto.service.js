@@ -10,7 +10,13 @@ async function obtenerPorId(id) {
   return data.data;
 }
 
+async function crear(datos) {
+  const { data } = await api.post('/productos', datos);
+  return data.data;
+}
+
 export default {
   listarTodos,
   obtenerPorId,
+  crear,
 };

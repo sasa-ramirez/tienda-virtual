@@ -8,6 +8,8 @@ import DetalleProducto from './pages/DetalleProducto';
 import Login from './pages/Login';
 import Registro from './pages/Registro';
 import CrearCategoria from './pages/admin/CrearCategoria';
+import CrearProducto from './pages/admin/CrearProducto';
+
 
 function App() {
   return (
@@ -26,8 +28,10 @@ function App() {
               <RutaProtegida soloAdmin>
                 <AdminLayout />
               </RutaProtegida>
+              
             }
           >
+            <Route path="productos" element={<CrearProducto />} />
             <Route path="categorias" element={<CrearCategoria />} />
           </Route>
         </Route>
