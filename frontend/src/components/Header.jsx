@@ -1,9 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import logo from '../assets/logo.jpeg';
+import { useAuth } from '../context/AuthContext';
+
 
 function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { usuario, cerrarSesion, esAdmin } = useAuth();
+const navigate = useNavigate();
+
+function manejarCerrarSesion() {
+  cerrarSesion();
+  navigate('/');
+}
 
   return (
     <header className="border-b border-borde bg-fondo sticky top-0 z-50">
@@ -14,25 +23,46 @@ function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          <Link to="/catalogo?categoria=carteras" className="text-sm text-texto hover:text-acento transition-colors">
-            Carteras
-          </Link>
-          <Link to="/catalogo?categoria=mochilas" className="text-sm text-texto hover:text-acento transition-colors">
-            Mochilas
-          </Link>
-          <Link to="/catalogo?categoria=accesorios" className="text-sm text-texto hover:text-acento transition-colors">
-            Accesorios
-          </Link>
-          <Link to="/login" className="text-sm text-texto hover:text-acento transition-colors">
-            Iniciar sesión
-          </Link>
-          <Link
-            to="/registro"
-            className="text-sm bg-acento text-fondo px-4 py-2 rounded-lg hover:bg-acento-hover transition-colors"
-          >
-            Registrarse
-          </Link>
-        </nav>
+  <Link to="/catalogo?categoria=carteras" className="text-sm text-texto hover:text-acento transition-colors">
+    Carteras
+  </Link>
+  <Link to="/catalogo?categoria=mochilas" className="text-sm text-texto hover:text-acento transition-colors">
+    Mochilas
+  </Link>
+  <Link to="/catalogo?categoria=accesorios" className="text-sm text-texto hover:text-acento transition-colors">
+    Accesorios
+  </Link>
+
+  {esAdmin && (
+    <Link to="/admin" className="text-sm text-acento font-medium hover:underline">
+      Panel Admin
+    </Link>
+  )}
+
+  {usuario ? (
+    <div className="flex items-center gap-4">
+      <span className="text-sm text-texto-secundario">Hola, {usuario.nombre}</span>
+      <button
+        onClick={manejarCerrarSesion}
+        className="text-sm text-texto hover:text-acento transition-colors"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+  ) : (
+    <>
+      <Link to="/login" className="text-sm text-texto hover:text-acento transition-colors">
+        Iniciar sesión
+      </Link>
+      <Link
+        to="/registro"
+        className="text-sm bg-acento text-fondo px-4 py-2 rounded-lg hover:bg-acento-hover transition-colors"
+      >
+        Registrarse
+      </Link>
+    </>
+  )}
+</nav>
 
         <button
           className="md:hidden text-texto"
