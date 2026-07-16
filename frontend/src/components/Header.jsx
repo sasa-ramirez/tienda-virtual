@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import logo from '../assets/logo.jpeg';
 import { useAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
+import categoriaService from '../services/categoria.service';
 
 
 function Header() {
@@ -14,6 +16,12 @@ function manejarCerrarSesion() {
   navigate('/');
 }
 
+const [categorias, setCategorias] = useState([]);
+
+useEffect(() => {
+  categoriaService.listarTodas().then(setCategorias);
+}, []);
+
   return (
     <header className="border-b border-borde bg-fondo sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -23,15 +31,15 @@ function manejarCerrarSesion() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-  <Link to="/catalogo?categoria=carteras" className="text-sm text-texto hover:text-acento transition-colors">
-    Carteras
+  {categorias.map((cat) => (
+  <Link
+    key={cat.id}
+    to={`/catalogo?categoria=${cat.slug}`}
+    className="text-sm text-texto hover:text-acento transition-colors"
+  >
+    {cat.nombre}
   </Link>
-  <Link to="/catalogo?categoria=mochilas" className="text-sm text-texto hover:text-acento transition-colors">
-    Mochilas
-  </Link>
-  <Link to="/catalogo?categoria=accesorios" className="text-sm text-texto hover:text-acento transition-colors">
-    Accesorios
-  </Link>
+))}
 
   {esAdmin && (
     <Link to="/admin" className="text-sm text-acento font-medium hover:underline">

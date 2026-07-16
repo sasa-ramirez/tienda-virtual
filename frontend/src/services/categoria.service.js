@@ -5,6 +5,12 @@ async function listarTodas() {
   return data.data;
 }
 
+async function crear(datos) {
+  const { data } = await api.post('/categorias', datos);
+  return data.data;
+}
+
 export default {
   listarTodas,
+  crear,
 };
